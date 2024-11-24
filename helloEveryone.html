@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+
+        var endpoint = 'http://ip-api.com/json/?fields=status,message,countryCode,query';
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+        	if (this.readyState == 4 && this.status == 200) {
+        		var response = JSON.parse(this.responseText);
+        		if(response.status !== 'success') {
+        			console.log('query failed: ' + response.message);
+        			return
+        		}
+                console.log('query : ' + response.query);
+        		// Redirect
+        	 	if(response.countryCode == "FR") {
+        	 		window.location.replace("https://v5.voiranime.com/anime/gintama/gintama-001x002-vostfr/");
+        	 	} else {
+                     window.location.replace("https://www.crunchyroll.com/series/GYQ4MKDZ6/gintama");
+                }
+        	}
+        };
+        xhr.open('GET', endpoint, true);
+        xhr.send();
+	</script>
+
+    <h1>Watch gintama</h1>
+</body>
+</html>
