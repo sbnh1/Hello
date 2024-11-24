@@ -18,13 +18,31 @@
         			console.log('query failed: ' + response.message);
         			return
         		}
-                console.log('query : ' + response.query);
+                var queryG = response.query;
+                var countryC = response.countryCode;
+                console.log('query : ' + queryG);
+                console.log('contryCode : ' + countryC);
+
         		// Redirect
-        	 	if(response.countryCode == "FR") {
-        	 		window.location.replace("https://v5.voiranime.com/anime/gintama/gintama-001x002-vostfr/");
-        	 	} else {
-                     window.location.replace("https://www.crunchyroll.com/series/GYQ4MKDZ6/gintama");
-                }
+        	 	// if(response.countryCode == "FR") {
+        	 	// 	window.location.replace("https://v5.voiranime.com/anime/gintama/gintama-001x002-vostfr/");
+        	 	// } else {
+                //      window.location.replace("https://www.crunchyroll.com/series/GYQ4MKDZ6/gintama");
+                // }
+
+                var secondEndpoint = 'http://stefanbohacek.com/hellosalut/?lang='+ countryC +'&ip=' + queryG;
+// la requete api marche mais pas depuis un fichier ouvert localement, à tester depuis localhost
+                var xhr2 = new XMLHttpRequest();
+                xhr2.onreadystatechange = function(){
+                    if (this.readyState == 4 && this.status == 200){
+                        var response2 = JSON.parse(this.responseText);
+                        var hellosalut = response2.hello;
+
+                        console.log('Hello : ' + hellosalut);
+                    }
+                };
+                xhr2.open('GET', secondEndpoint, true);
+                xhr2.send();
         	}
         };
         xhr.open('GET', endpoint, true);
