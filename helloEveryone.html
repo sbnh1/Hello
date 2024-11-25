@@ -29,9 +29,9 @@
         	 	// } else {
                 //      window.location.replace("https://www.crunchyroll.com/series/GYQ4MKDZ6/gintama");
                 // }
-
-                var secondEndpoint = 'http://stefanbohacek.com/hellosalut/?lang='+ countryC +'&ip=' + queryG;
-// la requete api marche mais pas depuis un fichier ouvert localement, à tester depuis localhost
+                var proxy = 'https://cors-anywhere.herokuapp.com/';
+                var secondEndpoint = proxy + 'http://stefanbohacek.com/hellosalut/?lang='+ countryC +'&ip=' + queryG;
+// Pour que la requete api marche il faut demander à la demo, sur le site : https://cors-anywhere.herokuapp.com/corsdemo
                 var xhr2 = new XMLHttpRequest();
                 xhr2.onreadystatechange = function(){
                     if (this.readyState == 4 && this.status == 200){
