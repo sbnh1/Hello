@@ -40,7 +40,13 @@
                         var hellosalut = response2.hello;
 
                         console.log('Hello : ' + hellosalut);
+
+                        var reponseApi = document.getElementById("hello");
+                        var contenu = reponseApi.textContent;
+                        var newSentence = contenu.replace("dit", "dit "+ hellosalut + " ");
+                        reponseApi.textContent = newSentence;
                     }
+
                 };
                 xhr2.open('GET', secondEndpoint, true);
                 xhr2.send();
@@ -51,5 +57,7 @@
 	</script>
 
     <h1>Watch gintama</h1>
+
+    <p id="hello">Je te dit, comment ca va ? </p>
 </body>
 </html>
