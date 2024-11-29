@@ -1,66 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-	<script>
+    <h1 id="hello">Hello! </h1>
 
-        // url pour obtenir les info de l'api (sous format json)
-        var endpoint = 'http://ip-api.com/json/?fields=status,message,countryCode,query';
-
-        // création d'une instance XMLHttpRequest pour pouvoir faire une premiere requete
-        var xhr = new XMLHttpRequest();
-
-        // (un bloc onreadystatechange par appelle d'api)
-        // Gestion des changements d'état de la requete
-        xhr.onreadystatechange = function() {
-            // verification si la requete est terminée (==4) && si elle est réussi (==200)
-        	if (this.readyState == 4 && this.status == 200) {
-                // toujours parser la réponse (au cas où)
-        		var response = JSON.parse(this.responseText);
-        		if(response.status !== 'success') {
-        			console.log('query failed: ' + response.message);
-        			return
-        		}
-                var queryG = response.query;
-                var countryC = response.countryCode;
-                console.log('query : ' + queryG);
-                console.log('contryCode : ' + countryC);
-
-                // proxy pour contourner les restrictions CORS
-                var proxy = 'https://api.allorigins.win/raw?url=';
-                var secondEndpoint = proxy + 'http://stefanbohacek.com/hellosalut/?lang='+ countryC +'&ip=' + queryG;
-                var xhr2 = new XMLHttpRequest();
-
-                xhr2.onreadystatechange = function(){
-                    if (this.readyState == 4 && this.status == 200){
-                        var response2 = JSON.parse(this.responseText);
-                        var hellosalut = response2.hello;
-
-                        console.log('Hello : ' + hellosalut);
-
-                        // Mise à jour dynamique du contenu html de l'élément avec l'id hello
-                        var reponseApi = document.getElementById("hello");
-                        var contenu = reponseApi.textContent;
-                        var newSentence = contenu.replace("dit", "dit "+ hellosalut + " ");
-                        reponseApi.textContent = newSentence;
-                    }
-
-                };
-                // GET = requete asynchrone (le programme ne bloque pas pendant que la requete est en cours)
-                xhr2.open('GET', secondEndpoint, true);
-                xhr2.send();
-        	}
-        };
-        xhr.open('GET', endpoint, true);
-        xhr.send();
-	</script>
-
-    <h1>Watch gintama</h1>
-
-    <p id="hello">Je te dit, comment ca va ? </p>
+    <script>
+        var helloEnregistrer = sessionStorage.getItem('hello');
+        var nomEnregistrer = sessionStorage.getItem('name');
+        if(helloEnregistrer && nomEnregistrer){
+            var sentence = document.getElementById("hello");
+            var contenu = sentence.textContent;
+            var newSentence = contenu.replace("Hello", helloEnregistrer + " " + nomEnregistrer);
+            sentence.textContent = newSentence;
+        } 
+    </script>
 </body>
 </html>
